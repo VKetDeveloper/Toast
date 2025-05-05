@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Toast",
+    name: "Vket Toast",
     platforms: [
         .iOS(.v16),
         .visionOS(.v1),
