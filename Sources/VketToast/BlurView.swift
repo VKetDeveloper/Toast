@@ -1,10 +1,12 @@
 import SwiftUI
 import UIKit
 
-public struct BlurView: UIViewRepresentable {
-    public let style: UIBlurEffect.Style
+// MARK: - Blur View
 
-    public init(style: UIBlurEffect.Style = .systemUltraThinMaterial) {
+public struct BlurView: UIViewRepresentable {
+    public var style: UIBlurEffect.Style
+
+    public init(style: UIBlurEffect.Style = .systemMaterial) {
         self.style = style
     }
 
@@ -12,5 +14,7 @@ public struct BlurView: UIViewRepresentable {
         UIVisualEffectView(effect: UIBlurEffect(style: style))
     }
 
-    public func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
+    public func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = UIBlurEffect(style: style)
+    }
 }

@@ -1,27 +1,53 @@
-
 import SwiftUI
+import UIKit
+
+// MARK: - Toast Style Enum
 
 public enum ToastStyle {
+    case normal
     case info
     case success
     case error
 
     var icon: String {
         switch self {
+        case .normal: return "bell.fill"
         case .info: return "info.circle.fill"
         case .success: return "checkmark.circle.fill"
         case .error: return "xmark.octagon.fill"
         }
     }
 
-    var tintColor: Color {
+    var useBlur: Bool {
+        self == .normal
+    }
+
+    var backgroundColor: Color {
         switch self {
-        case .info: return .blue
-        case .success: return .green
-        case .error: return .red
+        case .normal:
+            return .clear // BlurViewを使用
+        case .info:
+            return .blue.opacity(0.9)
+        case .success:
+            return .green.opacity(0.9)
+        case .error:
+            return .red.opacity(0.9)
+        }
+    }
+
+    var foregroundColor: Color {
+        switch self {
+        case .normal:
+            return Color.primary
+        default:
+            return Color.white
         }
     }
 }
+
+
+
+// MARK: - Toast View
 
 public struct CustomToastView: View {
     public let message: String
@@ -31,11 +57,13 @@ public struct CustomToastView: View {
 
     @Binding var isShowing: Bool
 
-    public init(message: String,
-                style: ToastStyle = .info,
-                progress: Float? = nil,
-                duration: Double = 2.5,
-                isShowing: Binding<Bool>) {
+    public init(
+        message: String,
+        style: ToastStyle = .info,
+        progress: Float? = nil,
+        duration: Double = 2.5,
+        isShowing: Binding<Bool>
+    ) {
         self.message = message
         self.style = style
         self.progress = progress
@@ -47,38 +75,46 @@ public struct CustomToastView: View {
         if isShowing {
             VStack {
                 Spacer()
-                HStack(alignment: .center, spacing: 16) {
+                HStack(spacing: 16) {
                     Image(systemName: style.icon)
                         .font(.title2)
-                        .foregroundColor(.white)
+                        .foregroundColor(style.foregroundColor)
 
                     VStack(alignment: .leading, spacing: 4) {
                         Text(message)
-                            .foregroundColor(.white)
+                            .foregroundColor(style.foregroundColor)
                             .font(.subheadline)
                             .multilineTextAlignment(.leading)
 
                         if let progress = progress {
                             ProgressView(value: progress)
-                                .progressViewStyle(LinearProgressViewStyle(tint: .white))
+                                .progressViewStyle(LinearProgressViewStyle(tint: style.foregroundColor))
                         }
                     }
                     Spacer()
                 }
                 .padding()
                 .background(
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(style.tintColor.opacity(0.9))
-                        .background(.ultraThinMaterial)
+                    Group {
+                        if style.useBlur {
+                            BlurView(style: .systemUltraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                        } else {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(style.backgroundColor)
+                        }
+                    }
                 )
-                .shadow(radius: 8)
+                .shadow(radius: 10)
                 .padding(.horizontal)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .onAppear {
                     if progress == nil {
                         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                            withAnimation {
-                                isShowing = false
+                            if isShowing {
+                                withAnimation {
+                                    isShowing = false
+                                }
                             }
                         }
                     }
