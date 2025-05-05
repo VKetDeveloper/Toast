@@ -1,4 +1,6 @@
 import SwiftUI
+
+#if canImport(UIKit)
 import UIKit
 
 public struct BlurView: UIViewRepresentable {
@@ -14,3 +16,4 @@ public struct BlurView: UIViewRepresentable {
 
     public func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
+#endif
