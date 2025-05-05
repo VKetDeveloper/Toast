@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ToastView: View {
+public struct VketToast: View {
     public let message: String
     public let progress: Float?
 
