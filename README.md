@@ -15,7 +15,7 @@ SwiftUI専用のリッチなトースト通知ビュー。アイコンや進捗�
 
 1. Xcodeのメニューから「File > Add Packages...」を選択
 2. 以下のリポジトリURLを入力：
- ` https://github.com/VKetDeveloper/Toast.git`
+ ` https://github.com/VKetDeveloper/VketToast.git`
 3. `Vket Toast` パッケージを追加
 
 ## 🔧 使い方
