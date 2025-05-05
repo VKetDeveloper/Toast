@@ -1,6 +1,4 @@
-// swift-tools-version: 6.1
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version: 5.9
 import PackageDescription
 
 let package = Package(
@@ -9,22 +7,27 @@ let package = Package(
         .iOS(.v16),
         .visionOS(.v1),
         .macCatalyst(.v15),
-        .macOS(.v15)
+        .macOS(.v13)
     ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "VketToast",
-            targets: ["VketToast"]),
+            targets: ["VketToast"]
+        ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Toast"),
+            name: "VketToast",
+            path: "Sources/Toast",
+            resources: [
+                // 必要に応じてアセットなどを含める
+                // .process("Resources")
+            ]
+        ),
         .testTarget(
-            name: "ToastTests",
-            dependencies: ["Toast"]
+            name: "VketToastTests",
+            dependencies: ["VketToast"],
+            path: "Tests/ToastTests"
         ),
     ]
 )
