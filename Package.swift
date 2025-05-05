@@ -4,10 +4,7 @@ import PackageDescription
 let package = Package(
     name: "VketToast",
     platforms: [
-        .iOS(.v16),
-        .visionOS(.v1),
-        .macCatalyst(.v15),
-        .macOS(.v13)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -18,16 +15,7 @@ let package = Package(
     targets: [
         .target(
             name: "VketToast",
-            path: "Sources/Toast",
-            resources: [
-                // 必要に応じてアセットなどを含める
-                // .process("Resources")
-            ]
-        ),
-        .testTarget(
-            name: "VketToastTests",
-            dependencies: ["VketToast"],
-            path: "Tests/ToastTests"
-        ),
+            path: "Sources/VketToast"
+        )
     ]
 )
