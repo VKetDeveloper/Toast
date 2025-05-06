@@ -18,38 +18,58 @@ SwiftUI専用のリッチなトースト通知ビュー。アイコンや進捗�
 
 1. Xcodeのメニューから「File > Add Packages...」を選択
 2. 以下のリポジトリURLを入力：
- ` https://github.com/VKetDeveloper/VketToast.git`
+ ` https://github.com/VKetDeveloper/VketToast`
 3. `Vket Toast` パッケージを追加
 
 ## 🔧 使い方
 
 ```swift
+import SwiftUI
 import VketToast
 
-struct ContentView: View {
- @State private var showToast = false
 
- var body: some View {
-     ZStack {
-         Button("トースト表示") {
-             showToast = true
-             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                 showToast = false
-             }
-         }
+struct InternalTestView: View {
+    @StateObject private var toastManager = ToastManager()
+    @State private var showVisionToast = false
 
-         if showToast {
-             ToastView(
-                 message: "アップロード中 (3 / 5)",
-                 progress: 0.6,
-                 icon: "arrow.up.circle.fill",
-                 theme: .info,
-                 animationDuration: 0.4
-             )
-         }
-     }
- }
+    var body: some View {
+        ZStack {
+            VStack(spacing: 16) {
+                Button("トースト表示（進捗あり）") {
+                    toastManager.show(message: "アップロード中 (3 / 5)", progress: 0.6)
+                }
+
+                Button("保存完了通知を表示（5秒）") {
+                    toastManager.show(message: "設定が保存されました", duration: 5)
+                }
+
+                Button("Vision Pro スタイル通知表示") {
+                    showVisionToast = true
+                }
+            }
+            .padding()
+
+            // Vision Pro スタイルのトースト（Blur + 短時間）
+            CustomToastView(
+                message: "これは Vision Pro スタイルの通知です",
+                style: .normal,
+                isShowing: $showVisionToast
+            )
+
+            // 成功スタイルのカスタムトースト（進捗や通常メッセージ）
+            if toastManager.isVisible {
+                CustomToastView(
+                    message: toastManager.message,
+                    style: .success,
+                    progress: toastManager.progress,
+                    isShowing: $toastManager.isVisible
+                )
+            }
+        }
+    }
 }
+
+
 ```
 ## パラメータ一覧
 | パラメータ名              | 型                             | 説明                                   |
