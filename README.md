@@ -2,6 +2,9 @@
 
 SwiftUI専用のリッチなトースト通知ビュー。アイコンや進捗バー、アニメーション、テーマカラーによるスタイリングが可能です。
 
+> [!NOTE]
+> The Framework is currently in **beta**. The API surface and feature sets are subject to change at any time before they become generally available. We do not currently recommend them for production use. The design may also be updated without prior notice.
+
 ## ✅ 主な機能
 
 - SwiftUIのみで完結（UIKit不要）
