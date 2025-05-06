@@ -77,12 +77,13 @@ struct InternalTestView: View {
 | `message`           | `String`                      | 表示するメッセージ                            |
 | `progress`          | `Float?`                      | 0.0〜1.0の進捗バー（任意）                     |
 | `icon`              | `String?`                     | SF Symbols名（例: `"checkmark.circle"`） |
-| `theme`             | `.success`, `.error`, `.info` | テーマカラーの種類                            |
+| `theme`             | `.normal`,`.success`, `.error`, `.info` | テーマカラーの種類                            |
 | `animationDuration` | `Double`                      | 表示・非表示のアニメーション時間（秒）                  |
 
 ## テーマカラー
 | テーマ        | 内容         |
 | ---------- | ---------- |
+| `.normal` | VisonPro風（スリガラスのようなデザイン）  |
 | `.success` | 成功・完了系（緑）  |
 | `.error`   | エラー・警告系（赤） |
 | `.info`    | 情報通知系（青）   |
