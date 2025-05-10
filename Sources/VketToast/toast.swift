@@ -1,52 +1,8 @@
+// MARK: - Toast View
 import SwiftUI
 import UIKit
 
-// MARK: - Toast Style Enum
-
-public enum ToastStyle {
-    case normal
-    case info
-    case success
-    case error
-
-    var icon: String {
-        switch self {
-        case .normal: return "bell.fill"
-        case .info: return "info.circle.fill"
-        case .success: return "checkmark.circle.fill"
-        case .error: return "xmark.octagon.fill"
-        }
-    }
-
-    var useBlur: Bool {
-        self == .normal
-    }
-
-    var backgroundColor: Color {
-        switch self {
-        case .normal:
-            return .clear // BlurViewを使用
-        case .info:
-            return .blue.opacity(0.9)
-        case .success:
-            return .green.opacity(0.9)
-        case .error:
-            return .red.opacity(0.9)
-        }
-    }
-
-    var foregroundColor: Color {
-        switch self {
-        case .normal:
-            return Color.primary
-        default:
-            return Color.white
-        }
-    }
-}
-// MARK: - Toast View
-
-public struct CustomToastView: View {
+public struct visionOS: View {
     public let message: String
     public let style: ToastStyle
     public let progress: Float?
